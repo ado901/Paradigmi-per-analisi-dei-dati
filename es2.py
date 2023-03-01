@@ -2,6 +2,7 @@ import itertools
 from random import shuffle
 values = list(range(1, 6))
 shuffle(values)
+print(f'Lista: {values}')
 def count_tops(values: list[int]) -> int:
     currentmax=0
     for i in values:
@@ -30,5 +31,4 @@ class Tops():
        
         
 
-print(values)
 print(list(Tops(values)))
