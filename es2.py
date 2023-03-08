@@ -29,6 +29,6 @@ class Tops():
         self._currentindex=self._currentindex+1
         return self.__next__()
        
-        
+ 
 
 print(list(Tops(values)))

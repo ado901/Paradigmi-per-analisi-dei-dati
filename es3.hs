@@ -1,0 +1,1 @@
+pythagoras= [(a,b,c) | c <- [1..10], b <- [1..10], a <- [1..10], a^2 + b^2 == c^2, a+b+c==24] -- set dei 3 insiemi ordinati e setto i due if inline
