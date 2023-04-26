@@ -1,0 +1,1 @@
+<block type="maze_forever"><statement name="DO"><block type="maze_moveForward"></block></statement></block>

@@ -1,0 +1,6 @@
+[0521/114615.426:ERROR:process_reader_win.cc(242)] ReadMemory at 0x2128b3a0000 of 64 bytes failed: Richiesta ReadProcessMemory o WriteProcessMemory completata solo parzialmente. (0x12B)
+[0521/114615.431:WARNING:pe_image_reader.cc(302)] could not read dos header from C:\WINDOWS\System32\shlwapi.dll
+[0521/114615.447:ERROR:process_reader_win.cc(242)] ReadMemory at 0x16b31f4000 of 49152 bytes failed: Richiesta ReadProcessMemory o WriteProcessMemory completata solo parzialmente. (0x12B)
+[0521/114615.447:ERROR:crash_report_exception_handler.cc(116)] WriteEverything failed
+[0521/114615.450:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Tentativo di accesso a un processo in fase di chiusura. (0xc000010a)
+[0514/111739.657:ERROR:crash_report_database_win.cc(428)] unexpected header

@@ -1,0 +1,1 @@
+<block type="maze_forever"><statement name="DO"><block type="maze_if"><field name="DIR">isPathLeft</field><statement name="DO"><block type="maze_turn"><field name="DIR">turnLeft</field></block></statement><next><block type="maze_moveForward"></block></next></block></statement></block>
