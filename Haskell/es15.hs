@@ -1,6 +1,5 @@
 import System.IO
-import Data.Char (digitToInt)
-import Data.List
+import Data.List ( nub, transpose )
 {- 
     Read one of the following files in Haskell
         skyscrapers_games.zip
@@ -26,11 +25,11 @@ main = do
     
     let linestmp= transpose lines
     {- PER AVERE LE RIGHE ESTRAGGO LA PRIMA LISTA E POI L'ULTIMA -}
-    let constraintrow = zip (init(tail(head lines))) (init(tail(last lines)))
+    let constraintrow = zip ( init $ tail $ head lines) (init $ tail $ last lines)
     {- PER AVERE LE COLONNE DOPO AVER FATTO LA TRASPOSTA ESTRAGGO LA PRIMA LISTA E POI L'ULTIMA -}
-    let constraintcol = zip (init(tail(head linestmp))) (init(tail(last linestmp)))
+    let constraintcol = zip (init $ tail $ head linestmp) (init$ tail$ last linestmp)
     {- RIMUOVO I BORDI -}
-    let matrix= transpose (init (tail (transpose(init (tail lines)))))
+    let matrix= transpose $ init $ tail $ transpose $ init $ tail lines
     putStr "MATRICE EFFETTIVA\n"
     mapM_ print matrix
     if  False `elem` map checkduplicate matrix then putStr "duplicate in rows\n" else putStr "unique in rows\n"

@@ -4,6 +4,8 @@
 ### Haskell ###
 dist
 dist-*
+.vscode
+SkyscrapersGame.hs
 cabal-dev
 *.o
 *.hi
