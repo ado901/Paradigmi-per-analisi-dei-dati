@@ -9,8 +9,6 @@ import Data.Array
 
     FAQ:
     -lo so, ho capito male la traccia e me ne sono accorto a metà, ma intanto che c'ero sono andato fino in fondo
-    -no, non ho idea di come si printi un array bidimensionale, anche cercando su internet i risultati erano sbagliati e non
-        voglio perderci troppo tempo. ChunksOfArray è quello che rimane del tentativo.
  -}
 
 cleanup :: (Int, Int) -> Array Int Bool -> Int -> Array Int Bool
