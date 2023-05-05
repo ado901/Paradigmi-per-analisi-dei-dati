@@ -21,7 +21,7 @@ main= do
     
     (rows,cols) <-getrowscols
     let matrix = array (0,rows*cols-1) [(i,False) | i<-[0..rows*cols-1]]
-    print $ chunksOfArray rows matrix
+    mapM_ print (chunksOf rows (elems matrix))
     play rows cols matrix 0
     
 check :: Array Int Bool -> Bool
@@ -32,7 +32,7 @@ play rows cols matrix moves= do
     putStrLn "Insert index"
     guess <- checkplayermove
     let newmatrix= checkval rows cols matrix guess
-    print $ chunksOfArray rows newmatrix 
+    mapM_ print (chunksOf rows (elems newmatrix)) 
     if check newmatrix then print ("solved with"++show (moves+1)) else play rows cols newmatrix (moves+1)
 
     
