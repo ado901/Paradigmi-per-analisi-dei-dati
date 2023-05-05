@@ -33,7 +33,7 @@ play rows cols matrix moves= do
     guess <- checkplayermove
     let newmatrix= checkval rows cols matrix guess
     print $ chunksOfArray rows newmatrix 
-    if check newmatrix then print ("solved with"++show moves) else play rows cols newmatrix (moves+1)
+    if check newmatrix then print ("solved with"++show (moves+1)) else play rows cols newmatrix (moves+1)
 
     
 getrowscols :: IO (Int,Int)

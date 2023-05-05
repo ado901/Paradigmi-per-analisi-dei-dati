@@ -51,7 +51,7 @@ play rows cols matrix moves= do
     when (guess /= "\n") $ do
         let newmatrix= cleanup (rows,cols) matrix (read guess :: Int)
         mapM_ print (chunksOf cols newmatrix)
-        if check newmatrix then print ("solved with"++show moves) else play rows cols newmatrix (moves+1)
+        if check newmatrix then print ("solved with"++show (moves+1)) else play rows cols newmatrix (moves+1)
 
     
 getrowscols :: IO (Int,Int)
