@@ -1,5 +1,8 @@
 import Data.Array
-
+import System.Random
+import Data.Word (Word32)
+import Data.Bits (xor, shiftL, shiftR)
+import Data.Time.Clock.POSIX (getPOSIXTime)
 {- 
     Modify the “Clean-up game” project
     Use a Haskell array instead of a list
@@ -10,17 +13,46 @@ import Data.Array
     FAQ:
     -lo so, ho capito male la traccia e me ne sono accorto a metà, ma intanto che c'ero sono andato fino in fondo
  -}
+type Rng32 = Word32
 
+xorshift32 :: Rng32 -> Rng32
+xorshift32 a = d where
+  b = a `xor` (a `shiftL` 13)
+  c = b `xor` (b `shiftR` 17)
+  d = c `xor` (c `shiftL` 5)
+
+randint :: (Int, Int) -> Rng32 -> (Int, Rng32)
+randint (nmin, nmax) gen = (val, nxt) where
+    nxt = xorshift32 gen
+    val = nmin + fromIntegral nxt `mod` (nmax + 1 - nmin)
+
+randints :: (Int, Int) -> Rng32 -> [Int]
+randints range gen =
+    val : randints range nxt
+    where (val, nxt) = randint range gen
+
+getRng32 :: IO Rng32
+getRng32 = do
+    now <- getPOSIXTime
+    return (round (now * 1000) :: Rng32)
+randommoves :: Int -> Int -> Int -> Array Int Bool -> IO (Array Int Bool)
+randommoves m cols rows matrix= do
+    gen <- getRng32
+    let moves= take m $ randints (0,rows*cols-1) gen
+    return (foldl (cleanup (rows, cols)) matrix moves)
 cleanup :: (Int, Int) -> Array Int Bool -> Int -> Array Int Bool
 cleanup (rows,cols) matrix index= matrix// [(i*cols+j,not $ matrix!(i*cols+j))| let (x,y)=divMod index cols,i<-[0..rows-1], j <- [0..cols-1], abs(i-x)+abs(j-y)==1]
 
 main :: IO ()
 main= do
     
-    (rows,cols) <-getrowscols
+    (rows,cols, m) <-getrowscols
     let matrix = array (0,rows*cols-1) [(i,False) | i<-[0..rows*cols-1]]
     mapM_ print (chunksOf rows (elems matrix))
-    play rows cols matrix 0
+    newmatrix <- randommoves m cols rows matrix
+    putStrLn "Random moves"
+    mapM_ print (chunksOf rows (elems newmatrix))
+    play rows cols newmatrix 0
     
 check :: Array Int Bool -> Bool
 check = and
@@ -34,11 +66,13 @@ play rows cols matrix moves= do
     if check newmatrix then print ("solved with"++show (moves+1)) else play rows cols newmatrix (moves+1)
 
     
-getrowscols :: IO (Int,Int)
+getrowscols :: IO (Int,Int, Int)
 getrowscols = do
     putStrLn "Insert rows and columns"
     [rows, cols] <- sequence [getLine, getLine]
-    return (read rows :: Int, read cols :: Int)
+    putStrLn "Insert number of random moves"
+    m <- getLine
+    return (read rows :: Int, read cols :: Int, read m::Int)
 
 
 chunksOf :: Int -> [a] -> [[a]]
