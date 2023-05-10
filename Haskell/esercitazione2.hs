@@ -3,6 +3,7 @@ import System.Random
 import Data.Word (Word32)
 import Data.Bits (xor, shiftL, shiftR)
 import Data.Time.Clock.POSIX (getPOSIXTime)
+import Data.List (nub)
 {- 
     Modify the “Clean-up game” project
     Use a Haskell array instead of a list
@@ -38,8 +39,7 @@ getRng32 = do
 randommoves :: Int -> Int -> Int -> Array Int Bool -> IO (Array Int Bool)
 randommoves m cols rows matrix= do
     gen <- getRng32
-    let moves= take m $ randints (0,rows*cols-1) gen
-    return (foldl (cleanup (rows, cols)) matrix moves)
+    return (foldl (cleanup (rows, cols)) matrix (take m $ nub $ randints (0,rows*cols-1) gen))
 cleanup :: (Int, Int) -> Array Int Bool -> Int -> Array Int Bool
 cleanup (rows,cols) matrix index= matrix// [(i*cols+j,not $ matrix!(i*cols+j))| let (x,y)=divMod index cols,i<-[0..rows-1], j <- [0..cols-1], abs(i-x)+abs(j-y)==1]
 

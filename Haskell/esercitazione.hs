@@ -7,6 +7,7 @@ import Data.Bits (xor, shiftL, shiftR)
 import Data.Time.Clock.POSIX (getPOSIXTime)
 import Control.Monad.Trans.RWS (put)
 
+
 {- Write a pure function in Haskell
 
     (Int, Int) -> [Bool] -> Int -> [Bool]
@@ -40,6 +41,7 @@ Minimize the impure part  -}
 l'esercizio l'ho interpretato come un usare la parte randomica come base per quella utente (infatti originariamente
 controllavo ogni mossa randomica per la vittoria) infatti nella versione consegnata precedentemente c'era solo la parte utente, reimplementarla ora è
 stato banale-}
+
 type Rng32 = Word32
 
 xorshift32 :: Rng32 -> Rng32
@@ -66,8 +68,7 @@ getRng32 = do
 randommoves :: Int -> Int -> Int -> [Bool] -> IO [Bool]
 randommoves m cols rows matrix= do
     gen <- getRng32
-    let moves= take m $ randints (0,rows*cols-1) gen
-    return (foldl (cleanup (rows, cols)) matrix moves)
+    return (foldl (cleanup (rows, cols)) matrix (take m $ nub $ randints (0,rows*cols-1) gen))
 main :: IO ()
 main= do
     
