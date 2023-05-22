@@ -79,7 +79,7 @@ fn move_ball1(b: &mut Ball) {
     }
     b.x += b.dx;
     b.y += b.dy;
-}ù
+}
 
 
 fn move_ball2(b: Ball)->Ball{
